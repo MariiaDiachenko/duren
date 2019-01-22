@@ -7,7 +7,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     duren = Game()
-
     # for_tests(duren = duren)
 
     return 'Hello World!'

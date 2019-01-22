@@ -5,17 +5,20 @@ from duren.Player import *
 class Game:
     colors = ['♠', '♣', '♦', '♥']
     numbers = [6, 7, 8, 9, 10, 11, 12, 13, 14]
-    #todo remove
-    # number_translate = ['6', '7', '8', '9', '10', 'J', 'Q', 'K', 'T']
     cards = []
     players = []
     battle = {
         'atak': [],
         'obrona': []
     }
+
+    """One of colors"""
     atut = ''
+
     """Player id"""
     turn = 0
+
+    """Player id"""
     winner = 0
 
     def __init__(self):
@@ -27,16 +30,20 @@ class Game:
 
         self.turn = self.set_initial_turn()
 
-
     def set_initial_turn(self):
         """Gracz z najmniejszą wartością karty coloru atutu zaczyna, a jeśli nikt nie ma atutu to pierwszy lepszy"""
+        starting_id = self.players[0].id
         minimal_for_players = []
         for player in self.players:
-            minimal_for_player = min(player.get_cards_in_atut(self.atut), key = lambda card: card.num)
-            minimal_for_players.append((player, minimal_for_player))
+            in_atut = player.get_cards_in_atut(self.atut)
+            if in_atut:
+                minimal_for_player = min(in_atut, key = lambda card: card.num)
+                minimal_for_players.append((player, minimal_for_player))
 
-        starting_id = min(minimal_for_players, key= lambda x: x[1].num)[0].id or 0
-        return starting_id if starting_id != 0 else self.players[0].id
+        if minimal_for_players:
+            starting_id = min(minimal_for_players, key= lambda x: x[1].num)[0].id
+
+        return starting_id
 
     def give_cards(self):
         player_num = 0
