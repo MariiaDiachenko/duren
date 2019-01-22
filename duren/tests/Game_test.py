@@ -15,10 +15,7 @@ def test_make_cards():
 
     assert duren.atut != ''
     assert duren.turn != 0
+    assert duren.attacker != 0
 
+    assert duren.battle != None
 
-# def test_give_cards():
-#     duren = Game()
-#     print(duren.players[0].cards)
-    # for player in duren.players:
-    #     assert 6 == len(player.cards)

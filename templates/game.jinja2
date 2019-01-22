@@ -1,9 +1,10 @@
 {% extends "layout.jinja2" %}
 
 {% block content %}
-    <div class="card">
-        <div class="card__img">
-            <img src="{{ url_for('static', filename='cards_images/' + card.img) }}" alt="">
+    <div class="board">
+        <div class="card">
+            <div class="card__img">
+                <img src="{{ url_for('static', filename='cards_images/' + card.img) }}" alt="">
+            </div>
         </div>
-    </div>
 {% endblock %}

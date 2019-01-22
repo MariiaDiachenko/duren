@@ -1,6 +1,7 @@
 import random
 from duren.Card import *
 from duren.Player import *
+from duren.Battle import *
 
 class Game:
     colors = ['♠', '♣', '♦', '♥']
@@ -17,6 +18,9 @@ class Game:
     turn = 0
 
     """Player id"""
+    attacker = 0
+
+    """Player id"""
     winner = 0
 
     def __init__(self):
@@ -27,9 +31,21 @@ class Game:
         self.give_cards()
 
         self.turn = self.set_initial_turn()
+        self.attacker = self.turn
+        self.battle = Battle()
 
-    def set_battle(self):
-        self.turn
+    """User Interface"""
+
+
+
+    """User Interface END"""
+
+
+    """We play for 2 players only"""
+    def get_player_by_id(self, id: int):
+        player = [player for player in self.players if player.id != id][0]
+        if not player: raise AssertionError('Invalid id')
+        return player
 
     def set_initial_turn(self):
         """Gracz z najmniejszą wartością karty coloru atutu zaczyna, a jeśli nikt nie ma atutu to pierwszy lepszy"""
@@ -62,6 +78,9 @@ class Game:
 
     def make_cards(self)->list:
         cards = [Card(num, col) for num in self.numbers for col in self.colors]
+        for i in range(len(cards)):
+            id = i+1
+            cards[i].id = id
         random.shuffle(cards)
         return cards
 

@@ -1,4 +1,5 @@
 class Card():
+    id = 0
     color = ''
     num = 0
     img = ''

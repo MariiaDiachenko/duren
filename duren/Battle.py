@@ -1,10 +1,8 @@
-class Battle:
-    attacker_id = 0
-    defender_id = 0
+from duren.Card import Card
 
+class Battle:
     attack = []
     defense = []
 
-    def __init__(self, attacker_id:int, defender_id: int):
-        self.attacker_id = attacker_id
-        self.defender_id = defender_id
+    def attack_with_card(self, card: Card):
+        self.attack.append(card)
