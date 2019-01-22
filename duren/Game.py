@@ -7,10 +7,8 @@ class Game:
     numbers = [6, 7, 8, 9, 10, 11, 12, 13, 14]
     cards = []
     players = []
-    battle = {
-        'atak': [],
-        'obrona': []
-    }
+
+    battle = None
 
     """One of colors"""
     atut = ''
@@ -29,6 +27,9 @@ class Game:
         self.give_cards()
 
         self.turn = self.set_initial_turn()
+
+    def set_battle(self):
+        self.turn
 
     def set_initial_turn(self):
         """Gracz z najmniejszą wartością karty coloru atutu zaczyna, a jeśli nikt nie ma atutu to pierwszy lepszy"""
