@@ -15,6 +15,8 @@ def test_make_cards():
 
     assert duren.atut != ''
     assert duren.turn != 0
+
+
 # def test_give_cards():
 #     duren = Game()
 #     print(duren.players[0].cards)

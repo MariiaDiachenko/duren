@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from duren.Game import *
 
 app = Flask(__name__)
@@ -7,9 +7,10 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     duren = Game()
+    card = duren.players[0].cards[0]
     # for_tests(duren = duren)
 
-    return 'Hello World!'
+    return render_template('game.jinja2', card = card)
 
 
 if __name__ == '__main__':
