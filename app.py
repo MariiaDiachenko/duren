@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():
+def hot_seats():
     duren = Game()
     card = duren.players[0].cards[0]
     # for_tests(duren = duren)

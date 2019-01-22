@@ -5,6 +5,7 @@ def test_make_cards():
     duren = Game()
     cards = duren.cards
     for card in cards:
+        assert card.id
         assert card.color
         assert card.num
         assert card.img
