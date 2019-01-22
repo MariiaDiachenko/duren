@@ -2,9 +2,8 @@
 
 {% block content %}
     <div class="card">
-        {{ card.sign }}
         <div class="card__img">
-
+            <img src="{{ url_for('static', filename='cards_images/' + card.img) }}" alt="">
         </div>
     </div>
 {% endblock %}

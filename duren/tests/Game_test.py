@@ -7,7 +7,7 @@ def test_make_cards():
     for card in cards:
         assert card.color
         assert card.num
-        assert card.sign
+        assert card.img
     """stan kart po rozdaniu dla domyślnie 2 graczy"""
     assert 24 == len(duren.cards)
     for player in duren.players:
