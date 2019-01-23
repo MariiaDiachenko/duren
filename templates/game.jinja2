@@ -1,9 +1,15 @@
 {% extends "layout.jinja2" %}
 
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
 {% block content %}
     <div class="board">
         <div class="p2 row">
-            <div class="cards cards--p2"></div>
+            <div class="cards cards--p2">
+
+            </div>
             <div class="cardsLeft"></div>
         </div>
         <div class="battle row">
@@ -20,4 +26,8 @@
 {#            </div>#}
 {#        </div>#}
     </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='game.js') }}"></script>
 {% endblock %}
