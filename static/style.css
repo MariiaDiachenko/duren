@@ -12,12 +12,13 @@
 }
 .menu{
     padding: 1em;
+    margin-right: auto;
 }
 .battle{
-    min-width: 70%;
     min-height: 80%;
 }
 .atut{
+    margin-left: auto;
     width: 3em;
     height:3em;
 }

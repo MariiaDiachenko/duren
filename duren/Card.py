@@ -20,7 +20,7 @@ class Card():
         else:
             suffix = 'S'
 
-        translate = [f'6{suffix}.png', f'7{suffix}.png', f'8{suffix}.png', f'9{suffix}.png', f'X{suffix}.png', f'J{suffix}.png', f'K{suffix}.png', f'Q{suffix}.png', f'A{suffix}.png']
+        translate = [ x.format(suffix = suffix) for x in ['6{suffix}.png', '7{suffix}.png', '8{suffix}.png', '9{suffix}.png', 'X{suffix}.png', 'J{suffix}.png', 'K{suffix}.png', 'Q{suffix}.png', 'A{suffix}.png']]
 
         if 0 == self.num: return ''
         else: return translate[self.num - 6]

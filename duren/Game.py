@@ -7,10 +7,13 @@ import json
 class Game:
     colors = ['♠', '♣', '♦', '♥']
     numbers = [6, 7, 8, 9, 10, 11, 12, 13, 14]
+    modes = ['hot_seats', 'computer', 'net']
     cards = []
     players = []
 
     battle = None
+
+    mode = ''
 
     """One of colors"""
     atut = ''
@@ -38,20 +41,22 @@ class Game:
     #todo przetestować, rozne put card jesli player atakuje albo sie broni?
     """User Interface"""
     def put_card(self, card_id: int):
-
-        #todo if can put card w zależności od tego czy atakuje czy się broni i jakie sa w battle
-        #musi to być metoda battle
-
         player = self.get_player_by_id(self.turn)
         index = player.find_card_by_id(card_id)
-        card = player.cards.pop(index)
-        self.battle.attack.append(card)
+        card = player.cards[index]
+
+        is_attacker = player.id == self.attacker
+
+        if self.battle.can_put_card(card, is_attacker, self.atut):
+            card = player.cards.pop(index)
+            self.battle.put_card(card, is_attacker)
+
+
+            self.change_turn()
 
         #todo sprawdzanie: atak odparty? wygrana? też w zależności od tego czy gracz jest atakujacym czy nie
 
         #todo dobieranie kart do playerów
-
-        self.change_turn()
 
     """User Interface END"""
 
@@ -108,3 +113,9 @@ class Game:
 
     def change_turn(self):
         self.turn = [player for player in self.players if player.id != self.turn][0].id
+
+    def set_mode(self, mode):
+        if mode in self.modes:
+            self.mode = mode
+        else:
+            raise AssertionError('Invalid mode')

@@ -1,7 +1,6 @@
 class Player():
     id = 0
     cards = []
-    attacker = False
 
     def __init__(self, id):
         self.id = id

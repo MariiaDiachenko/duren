@@ -28,13 +28,18 @@ function renderGame(result){
     $('#JS-atut').html('atut: ' + result.atut);
     initPlayers(result);
 
-    // #todo
     initBattle(result);
 
 }
 
 function initBattle(result){
+    let defenser = result.attacker == 1? 2 : 1;
 
+    let attackCards = makeCards(result.battle.attack, true);
+    $('#JS-battle__p' + result.attacker).html(attackCards);
+
+    let defenseCards = makeCards(result.battle.defense, true);
+    $('#JS-battle__p' + defenser).html(defenseCards);
 }
 
 function initPlayers(result){
@@ -45,12 +50,9 @@ function initPlayers(result){
 }
 
 function initPlayer(player, turn){
-    let cards = '';
     let thisPlayerTurn = player.id === turn ? true : false;
-    for(var key in player.cards){
-        let card = player.cards[key]
-        cards += makeCard(card, thisPlayerTurn);
-    }
+    let cards = makeCards(player.cards, thisPlayerTurn);
+
     $('#JS-p' + player.id).html(cards);
 
     if (thisPlayerTurn === true) {
@@ -71,6 +73,15 @@ function putCard(id){
     durenAjax({'cmd':'put_card', 'data':id}, function(result){
         renderGame(result);
     });
+}
+
+function makeCards(cards, show){
+    let out = '';
+    for(var key in cards){
+        let card = cards[key]
+        out += makeCard(card, show);
+    }
+    return out;
 }
 
 function makeCard(card, show){
