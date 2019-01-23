@@ -38,10 +38,19 @@ class Game:
     #todo przetestować, rozne put card jesli player atakuje albo sie broni?
     """User Interface"""
     def put_card(self, card_id: int):
+
+        #todo if can put card w zależności od tego czy atakuje czy się broni i jakie sa w battle
+        #musi to być metoda battle
+
         player = self.get_player_by_id(self.turn)
         index = player.find_card_by_id(card_id)
         card = player.cards.pop(index)
         self.battle.attack.append(card)
+
+        #todo sprawdzanie: atak odparty? wygrana? też w zależności od tego czy gracz jest atakujacym czy nie
+
+        #todo dobieranie kart do playerów
+
         self.change_turn()
 
     """User Interface END"""

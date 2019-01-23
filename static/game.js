@@ -26,17 +26,24 @@ function durenAjax(json, success){
 function renderGame(result){
     $('#JS-cardsLeft').html('cards left: ' + result.cardsLeft);
     $('#JS-atut').html('atut: ' + result.atut);
+    initPlayers(result);
 
+    // #todo
+    initBattle(result);
+
+}
+
+function initBattle(result){
+
+}
+
+function initPlayers(result){
     for(let key in result.players){
       let player = result.players[key]
       initPlayer(player, result.turn);
     }
-
-
-    console.log(result);
 }
 
-//todo addFunctionToCard i zmiany na serwerze i tyle
 function initPlayer(player, turn){
     let cards = '';
     let thisPlayerTurn = player.id === turn ? true : false;
@@ -60,7 +67,6 @@ function addFunctionToCards(cards){
     }
 }
 
-// #todo send ajax request
 function putCard(id){
     durenAjax({'cmd':'put_card', 'data':id}, function(result){
         renderGame(result);
