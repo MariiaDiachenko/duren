@@ -2,6 +2,7 @@ import random
 from duren.Card import *
 from duren.Player import *
 from duren.Battle import *
+import json
 
 class Game:
     colors = ['♠', '♣', '♦', '♥']
@@ -21,7 +22,7 @@ class Game:
     attacker = 0
 
     """Player id"""
-    winner = 0
+    duren = 0
 
     def __init__(self):
         self.cards = self.make_cards()
@@ -34,15 +35,21 @@ class Game:
         self.attacker = self.turn
         self.battle = Battle()
 
+    #todo przetestować, rozne put card jesli player atakuje albo sie broni?
     """User Interface"""
-
+    def put_card(self, card_id: int):
+        player = self.get_player_by_id(self.turn)
+        index = player.find_card_by_id(card_id)
+        card = player.cards.pop(index)
+        self.battle.attack.append(card)
+        self.change_turn()
 
     """User Interface END"""
 
-
+    #todo przetestować
     """We play for 2 players only"""
     def get_player_by_id(self, id: int):
-        player = [player for player in self.players if player.id != id][0]
+        player = [player for player in self.players if player.id == id][0]
         if not player: raise AssertionError('Invalid id')
         return player
 
@@ -85,3 +92,10 @@ class Game:
 
     def pick_atut(self):
         return random.choice(self.colors)
+
+    def make_response(self):
+        return json.dumps({'players':self.players, 'atut':self.atut, 'cardsLeft':len(self.cards), 'turn':self.turn,
+                           'attacker':self.attacker, 'duren':self.duren, 'battle': self.battle}, default = lambda x: x.__dict__)
+
+    def change_turn(self):
+        self.turn = [player for player in self.players if player.id != self.turn][0].id

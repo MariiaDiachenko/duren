@@ -7,24 +7,30 @@
 {% block content %}
     <div class="board">
         <div class="p2 row">
-            <div class="cards cards--p2">
+            <div id="JS-p2" class="cards cards--p2">
 
             </div>
-            <div class="cardsLeft"></div>
+            <div id="JS-cardsLeft" class="cardsLeft"></div>
         </div>
         <div class="battle row">
-            <div class="menu"></div>
+            <div class="menu">
+                <button id="JStake" class="menu__btn">take</button>
+{#                <button id="JSpass" class="menu__btn">pass</button>#}
+            </div>
             <div class="battle"></div>
-            <div class="atut"></div>
+            <div id="JS-atut" class="atut"></div>
         </div>
         <div class="p1 row">
-            <div class="cards cards--p1"></div>
+            <div id="JS-p1" class="cards cards--p1">
+
+            <div class="card">
+                <div class="card__img">
+                    <img src="/static/cards_images/6C.png" alt="">
+                </div>
+            </div>
+
+            </div>
         </div>
-{#        <div class="card">#}
-{#            <div class="card__img">#}
-{#                <img src="{{ url_for('static', filename='cards_images/' + card.img) }}" alt="">#}
-{#            </div>#}
-{#        </div>#}
     </div>
 {% endblock %}
 

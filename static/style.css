@@ -8,18 +8,28 @@
     height: 700px;
 }
 .cards{
-    height: 70%;
-    width: 70%;
+    display: flex;
+}
+.menu{
+    padding: 1em;
+}
+.battle{
+    min-width: 70%;
+    min-height: 80%;
+}
+.atut{
+    width: 3em;
+    height:3em;
 }
 .row{
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.cardsLeft{
+    padding-left: 50px;
+}
 .card{
-    background-color: red;
-    width: 100px;
-    height: 300px;
 }
 .board{
 
