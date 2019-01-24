@@ -1,5 +1,7 @@
+import pytest
 from flask import Flask, render_template, request
 from duren.Game import *
+from duren.tests.fixtures import *
 import json
 
 app = Flask(__name__)
@@ -21,15 +23,20 @@ def ajax_duren():
     if not duren.mode:
         duren.mode = 'hot_seats'
 
+    print(cmd)
     if cmd == 'put_card':
         duren.put_card(data)
-
+    elif cmd == 'take':
+        duren.take()
+    elif cmd == 'pass':
+        duren.pass_attack()
+    elif cmd == 'reset':
+        duren.reset()
 
     return duren.make_response()
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5012, debug=True)
-
 
 # def for_tests(**ins):
 #     # cards = ins['duren'].cards

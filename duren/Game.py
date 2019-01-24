@@ -7,7 +7,7 @@ import json
 class Game:
     colors = ['♠', '♣', '♦', '♥']
     numbers = [6, 7, 8, 9, 10, 11, 12, 13, 14]
-    modes = ['hot_seats', 'computer', 'net']
+    modes = ['hot_seats', 'computer']
     cards = []
     players = []
 
@@ -50,18 +50,57 @@ class Game:
         if self.battle.can_put_card(card, is_attacker, self.atut):
             card = player.cards.pop(index)
             self.battle.put_card(card, is_attacker)
-
-
             self.change_turn()
 
         #todo sprawdzanie: atak odparty? wygrana? też w zależności od tego czy gracz jest atakujacym czy nie
 
         #todo dobieranie kart do playerów
 
+    def take(self):
+        if self.turn != self.attacker:
+            index = self.find_player_by_id(self.turn)
+            self.players[index].cards.append(self.battle.attack[-1])
+            self.battle.clear()
+            self.pour_players_cards()
+
+            self.change_turn()
+            self.attacker = self.turn
+
+    def pass_attack(self):
+        self.battle.clear()
+        self.pour_players_cards()
+
+        self.change_turn()
+        self.attacker = self.turn
+
+    def reset(self):
+        self.__init__()
+
     """User Interface END"""
 
-    #todo przetestować
-    """We play for 2 players only"""
+    #todo atakujący dobiera pierwszy a potem obrońca
+    def pour_players_cards(self):
+        self.pour_for_player_by_id(self.attacker)
+        for player in self.players:
+            if player.id != self.attacker:
+                self.pour_for_player_by_id(player.id)
+
+    def pour_for_player_by_id(self, id):
+        index = self.find_player_by_id(id)
+
+        while len(self.players[index].cards) != 6:
+            if len(self.cards) == 0: return
+            card = self.cards.pop()
+            self.players[index].cards.append(card)
+
+    def find_player_by_id(self, id):
+        for i in range(len(self.players)):
+            player = self.players[i]
+            if player.id == id:
+                return i
+
+        raise AssertionError('Invalid id')
+
     def get_player_by_id(self, id: int):
         player = [player for player in self.players if player.id == id][0]
         if not player: raise AssertionError('Invalid id')

@@ -3,19 +3,32 @@ const gameUrl = '/ajax_duren'
 const imgUrl = '/static/cards_images/'
 
 $(document).ready(function(){
-    durenAjax( {'cmd':'init'}, function(result){
-        renderGame(result);
-    });
+    durenAjax( {'cmd':'init'});
+    addMenuFunctions();
 });
 
-function durenAjax(json, success){
+function addMenuFunctions(){
+    $('#JS-take').click(function() {
+       durenAjax({'cmd':'take'});
+    });
+    $('#JS-pass').click(function() {
+       durenAjax({'cmd':'pass'});
+    });
+    $('#JS-reset').click(function() {
+       durenAjax({'cmd':'reset'});
+    });
+}
+
+function durenAjax(json){
       $.ajax({
       url: gameUrl,
       type: 'POST',
       dataType:'json',
       contentType: 'application/json',
       data:JSON.stringify(json),
-      success:success,
+      success: function(result){
+        renderGame(result);
+    },
       error: function(err, s , exception){
           console.log(exception);
       }
@@ -27,9 +40,7 @@ function renderGame(result){
     $('#JS-cardsLeft').html('cards left: ' + result.cardsLeft);
     $('#JS-atut').html('atut: ' + result.atut);
     initPlayers(result);
-
     initBattle(result);
-
 }
 
 function initBattle(result){
@@ -45,13 +56,15 @@ function initBattle(result){
 function initPlayers(result){
     for(let key in result.players){
       let player = result.players[key]
-      initPlayer(player, result.turn);
+        initPlayer(player, result.turn);
     }
 }
 
 function initPlayer(player, turn){
     let thisPlayerTurn = player.id === turn ? true : false;
-    let cards = makeCards(player.cards, thisPlayerTurn);
+        //todo change while debug ends
+    console.log(turn);
+    let cards = makeCards(player.cards, true);//thisPlayerTurn);
 
     $('#JS-p' + player.id).html(cards);
 
@@ -70,9 +83,7 @@ function addFunctionToCards(cards){
 }
 
 function putCard(id){
-    durenAjax({'cmd':'put_card', 'data':id}, function(result){
-        renderGame(result);
-    });
+    durenAjax({'cmd':'put_card', 'data':id});
 }
 
 function makeCards(cards, show){

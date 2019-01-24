@@ -1,5 +1,5 @@
-import pytest
 from duren.Game import Game
+from duren.tests.fixtures import *
 
 def test_make_cards():
     duren = Game()
@@ -20,3 +20,6 @@ def test_make_cards():
 
     assert duren.battle != None
 
+def test_put_card(case_1):
+    duren = case_1
+    print(duren)

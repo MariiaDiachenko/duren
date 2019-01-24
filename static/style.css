@@ -13,6 +13,11 @@
 .menu{
     padding: 1em;
     margin-right: auto;
+    display: flex;
+    flex-flow: column nowrap;
+}
+.menu__btn{
+    margin-top:1em;
 }
 .battle{
     min-height: 80%;
