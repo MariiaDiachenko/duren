@@ -63,15 +63,15 @@ class Game:
             self.battle.clear()
             self.pour_players_cards()
 
-            self.change_turn()
             self.attacker = self.turn
 
     def pass_attack(self):
-        self.battle.clear()
-        self.pour_players_cards()
+        if self.turn == self.attacker:
+            self.battle.clear()
+            self.pour_players_cards()
 
-        self.change_turn()
-        self.attacker = self.turn
+            self.change_turn()
+            self.attacker = self.turn
 
     def reset(self):
         self.__init__()
@@ -88,8 +88,7 @@ class Game:
     def pour_for_player_by_id(self, id):
         index = self.find_player_by_id(id)
 
-        while len(self.players[index].cards) != 6:
-            if len(self.cards) == 0: return
+        while len(self.players[index].cards) < 6 and len(self.cards) != 0:
             card = self.cards.pop()
             self.players[index].cards.append(card)
 
