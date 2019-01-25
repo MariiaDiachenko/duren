@@ -12,7 +12,7 @@ class Game:
 
     battle = None
 
-    computer = False
+    vs_computer = False
 
     """One of colors"""
     atut = ''
@@ -31,7 +31,6 @@ class Game:
         self.players = self.make_players()
         self.atut = self.pick_atut()
         self.duren = 0
-        self.vs_computer = False
 
         self.give_cards()
 
@@ -39,7 +38,6 @@ class Game:
         self.attacker = self.turn
         self.battle = Battle()
 
-    """User Interface"""
     def put_card(self, card_id: int):
         if self.duren != 0:
             return
@@ -69,11 +67,16 @@ class Game:
 
         if puttable_cards == []:
             if is_attacker:
-                self.pass_attack()
+                self.battle.clear()
+                self.pour_players_cards()
+
+                self.change_turn()
+                self.attacker = self.turn
                 return
             else:
                 self.take()
                 self.computer_move()
+                return
         else:
             not_atut_cards = sorted([card for card in puttable_cards if card.color != self.atut], key=lambda x: x.num)
             if not_atut_cards != []:
@@ -85,8 +88,8 @@ class Game:
                 card = player.cards.pop(index)
                 self.battle.put_card(card, is_attacker)
 
-        self.handle_win()
-        self.change_turn()
+            self.handle_win()
+            self.change_turn()
 
     def take(self):
         if self.turn != self.attacker and self.duren == 0:
@@ -112,7 +115,6 @@ class Game:
         self.__init__()
         self.duren = 0
 
-    """User Interface END"""
 
     def handle_win(self):
         for player in self.players:
@@ -188,7 +190,7 @@ class Game:
 
     def make_response(self):
         return json.dumps({'players':self.players, 'atut':self.atut, 'cardsLeft':len(self.cards), 'turn':self.turn,
-                           'attacker':self.attacker, 'duren':self.duren, 'battle': self.battle, 'duren':self.duren}, default = lambda x: x.__dict__)
+                           'attacker':self.attacker, 'duren':self.duren, 'battle': self.battle, 'duren':self.duren, 'vs_computer':self.vs_computer}, default = lambda x: x.__dict__)
 
     def change_turn(self):
         self.turn = [player for player in self.players if player.id != self.turn][0].id

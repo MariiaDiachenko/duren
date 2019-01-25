@@ -26,8 +26,8 @@ def ajax_duren():
     elif cmd == 'pass':
         duren.pass_attack()
     elif cmd == 'computer':
-        duren.vs_computer = True if duren.vs_computer == False else True
         duren.reset()
+        duren.vs_computer = False if duren.vs_computer == True else True
     elif cmd == 'reset':
         duren.reset()
 

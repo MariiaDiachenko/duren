@@ -45,6 +45,15 @@ function renderGame(result){
     initPlayers(result);
     initBattle(result);
     handleWin(result.duren);
+    displayComp(result.vs_computer);
+}
+
+function displayComp(comp) {
+    if(comp){
+        $('#JS-displayComp').html('you play vs computer');
+    } else {
+        $('#JS-displayComp').html('');
+    }
 }
 
 function handleWin(duren){
