@@ -8,14 +8,17 @@ $(document).ready(function(){
 });
 
 function addMenuFunctions(){
+    $('#JS-reset').click(function() {
+        durenAjax({'cmd':'reset'});
+    });
+    $('#JS-computer').click(function() {
+        durenAjax({'cmd':'computer'});
+    });
     $('#JS-take').click(function() {
        durenAjax({'cmd':'take'});
     });
     $('#JS-pass').click(function() {
        durenAjax({'cmd':'pass'});
-    });
-    $('#JS-reset').click(function() {
-       durenAjax({'cmd':'reset'});
     });
 }
 
@@ -41,6 +44,19 @@ function renderGame(result){
     $('#JS-atut').html('atut: ' + result.atut);
     initPlayers(result);
     initBattle(result);
+    handleWin(result.duren);
+}
+
+function handleWin(duren){
+    if(duren != 0){
+        $('#JS-win')
+            .html('END. Player ' + duren + ' is duren')
+            .css('display', 'flex');
+    } else {
+        $('#JS-win')
+            .html('')
+            .css('display', 'none');
+    }
 }
 
 function initBattle(result){
@@ -62,9 +78,7 @@ function initPlayers(result){
 
 function initPlayer(player, turn){
     let thisPlayerTurn = player.id === turn ? true : false;
-        //todo change while debug ends
-    console.log(turn);
-    let cards = makeCards(player.cards, true);//thisPlayerTurn);
+    let cards = makeCards(player.cards, thisPlayerTurn);
 
     $('#JS-p' + player.id).html(cards);
 

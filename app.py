@@ -9,19 +9,16 @@ duren = Game()
 
 @app.route('/')
 def hot_seats():
-    card = duren.players[0].cards[0]
-    # for_tests(duren = duren)
+    #todo remove after debug
+    # duren.cards = []
 
-    return render_template('game.jinja2', card = card)
+    return render_template('game.jinja2')
 
 @app.route('/ajax_duren', methods = ['POST'])
 def ajax_duren():
     json = request.get_json()
     cmd = json.get('cmd', '')
     data = json.get('data', {})
-
-    if not duren.mode:
-        duren.mode = 'hot_seats'
 
     print(cmd)
     if cmd == 'put_card':
@@ -30,6 +27,9 @@ def ajax_duren():
         duren.take()
     elif cmd == 'pass':
         duren.pass_attack()
+    elif cmd == 'computer':
+        duren.vs_computer = True if duren.vs_computer == False else True
+        duren.reset()
     elif cmd == 'reset':
         duren.reset()
 

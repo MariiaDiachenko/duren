@@ -8,6 +8,9 @@ class Battle:
         self.attack = []
         self.defense = []
 
+    def get_puttable_cards(self, cards: list, attacker:bool, atut:str):
+        return [card for card in cards if self.can_put_card(card, attacker, atut)]
+
     def can_put_card(self, card: Card, attacker: bool, atut:str)->bool:
 
         all = self.attack + self.defense
@@ -16,8 +19,8 @@ class Battle:
 
         if attacker:
             """Atakujący może zucić atut"""
-            if card.color == atut:
-                return True
+            # if card.color == atut: todo chyba nie możne
+            #     return True
             """albo karty jakiegokolwiek numeru co są już w battle"""
             for num in (card.num for card in all):
                 if card.num == num:
@@ -33,7 +36,6 @@ class Battle:
                 if attack_card.color == atut and attack_card.num > card.num:
                     return False
                 return True
-
 
         return False
 

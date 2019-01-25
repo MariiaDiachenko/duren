@@ -7,13 +7,12 @@ import json
 class Game:
     colors = ['♠', '♣', '♦', '♥']
     numbers = [6, 7, 8, 9, 10, 11, 12, 13, 14]
-    modes = ['hot_seats', 'computer']
     cards = []
     players = []
 
     battle = None
 
-    mode = ''
+    computer = False
 
     """One of colors"""
     atut = ''
@@ -31,6 +30,8 @@ class Game:
         self.cards = self.make_cards()
         self.players = self.make_players()
         self.atut = self.pick_atut()
+        self.duren = 0
+        self.vs_computer = False
 
         self.give_cards()
 
@@ -38,9 +39,11 @@ class Game:
         self.attacker = self.turn
         self.battle = Battle()
 
-    #todo przetestować, rozne put card jesli player atakuje albo sie broni?
     """User Interface"""
     def put_card(self, card_id: int):
+        if self.duren != 0:
+            return
+
         player = self.get_player_by_id(self.turn)
         index = player.find_card_by_id(card_id)
         card = player.cards[index]
@@ -50,14 +53,43 @@ class Game:
         if self.battle.can_put_card(card, is_attacker, self.atut):
             card = player.cards.pop(index)
             self.battle.put_card(card, is_attacker)
+            self.handle_win()
             self.change_turn()
 
-        #todo sprawdzanie: atak odparty? wygrana? też w zależności od tego czy gracz jest atakujacym czy nie
+            if self.vs_computer:
+                self.computer_move()
 
-        #todo dobieranie kart do playerów
+    def computer_move(self):
+        if self.duren != 0:
+            return
+
+        player = self.get_player_by_id(self.turn)
+        is_attacker = player.id == self.attacker
+        puttable_cards = sorted(self.battle.get_puttable_cards(player.cards, is_attacker, self.atut), key=lambda x: x.num)
+
+        if puttable_cards == []:
+            if is_attacker:
+                self.pass_attack()
+                return
+            else:
+                self.take()
+                self.computer_move()
+        else:
+            not_atut_cards = sorted([card for card in puttable_cards if card.color != self.atut], key=lambda x: x.num)
+            if not_atut_cards != []:
+                index = player.find_card_by_id(not_atut_cards[0].id)
+                card = player.cards.pop(index)
+                self.battle.put_card(card, is_attacker)
+            else:
+                index = player.find_card_by_id(puttable_cards[0].id)
+                card = player.cards.pop(index)
+                self.battle.put_card(card, is_attacker)
+
+        self.handle_win()
+        self.change_turn()
 
     def take(self):
-        if self.turn != self.attacker:
+        if self.turn != self.attacker and self.duren == 0:
             index = self.find_player_by_id(self.turn)
             self.players[index].cards.append(self.battle.attack[-1])
             self.battle.clear()
@@ -66,20 +98,29 @@ class Game:
             self.attacker = self.turn
 
     def pass_attack(self):
-        if self.turn == self.attacker:
+        if self.turn == self.attacker and self.duren == 0:
             self.battle.clear()
             self.pour_players_cards()
 
             self.change_turn()
             self.attacker = self.turn
 
+            if self.vs_computer:
+                self.computer_move()
+
     def reset(self):
         self.__init__()
+        self.duren = 0
 
     """User Interface END"""
 
-    #todo atakujący dobiera pierwszy a potem obrońca
+    def handle_win(self):
+        for player in self.players:
+            if player.cards == []:
+                self.duren = [player.id for player in self.players if len(player.cards)][0]
+
     def pour_players_cards(self):
+        """atakujący dobiera pierwszy a potem obrońca"""
         self.pour_for_player_by_id(self.attacker)
         for player in self.players:
             if player.id != self.attacker:
@@ -147,7 +188,7 @@ class Game:
 
     def make_response(self):
         return json.dumps({'players':self.players, 'atut':self.atut, 'cardsLeft':len(self.cards), 'turn':self.turn,
-                           'attacker':self.attacker, 'duren':self.duren, 'battle': self.battle}, default = lambda x: x.__dict__)
+                           'attacker':self.attacker, 'duren':self.duren, 'battle': self.battle, 'duren':self.duren}, default = lambda x: x.__dict__)
 
     def change_turn(self):
         self.turn = [player for player in self.players if player.id != self.turn][0].id

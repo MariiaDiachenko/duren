@@ -35,8 +35,22 @@
 .cardsLeft{
     padding-left: 50px;
 }
-.card{
-}
-.board{
-
+.winWindow{
+    background: rebeccapurple;
+    text-align: center;
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 10px solid black;
+    border-radius: 80px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 170%;
 }
