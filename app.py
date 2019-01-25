@@ -1,8 +1,6 @@
 import pytest
 from flask import Flask, render_template, request
 from duren.Game import *
-from duren.tests.fixtures import *
-import json
 
 app = Flask(__name__)
 duren = Game()
