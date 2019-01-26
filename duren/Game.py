@@ -115,7 +115,6 @@ class Game:
         self.__init__()
         self.duren = 0
 
-
     def handle_win(self):
         for player in self.players:
             if player.cards == []:

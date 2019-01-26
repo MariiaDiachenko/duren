@@ -58,8 +58,9 @@ function displayComp(comp) {
 
 function handleWin(duren){
     if(duren != 0){
+        let side = duren == 1? 'Bottom' : 'Top';
         $('#JS-win')
-            .html('END. Player ' + duren + ' is duren')
+            .html('END.'+ side +' player is duren')
             .css('display', 'flex');
     } else {
         $('#JS-win')
@@ -86,8 +87,10 @@ function initPlayers(result){
 }
 
 function initPlayer(player, turn){
+    // todo remove after deubg
+    console.log(player.id);
     let thisPlayerTurn = player.id === turn ? true : false;
-    let cards = makeCards(player.cards, thisPlayerTurn);
+    let cards = makeCards(player.cards, true);//thisPlayerTurn);
 
     $('#JS-p' + player.id).html(cards);
 
