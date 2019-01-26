@@ -87,10 +87,8 @@ function initPlayers(result){
 }
 
 function initPlayer(player, turn){
-    // todo remove after deubg
-    console.log(player.id);
     let thisPlayerTurn = player.id === turn ? true : false;
-    let cards = makeCards(player.cards, true);//thisPlayerTurn);
+    let cards = makeCards(player.cards, thisPlayerTurn);
 
     $('#JS-p' + player.id).html(cards);
 
