@@ -33,7 +33,7 @@ def ajax_duren():
     return duren.make_response()
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5012, debug=True)
+    app.run(host="149.156.175.59", port=5023, debug=True)
 
 # def for_tests(**ins):
 #     # cards = ins['duren'].cards
