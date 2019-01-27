@@ -1,6 +1,8 @@
 .content{
     height: 100vh;
     padding: 0em 3em;
+    backgroud-color: #6b3910fc;
+
 }
 .board{
     display: grid;
@@ -9,23 +11,36 @@
 }
 .cards{
     display: flex;
+    box-shadow: 0 0 13px #332727;
 }
 .menu{
     padding: 1em;
     margin-right: auto;
     display: flex;
     flex-flow: column nowrap;
+    color: white;
+    font-size: initial;
 }
 .menu__btn{
     margin-top:1em;
+    background-color: #5f3b23;
+    color: white;
+    font-size: initial;
+
 }
 .battle{
     min-height: 80%;
+    background-color: #3c1f0cb5;
+
 }
 .atut{
     margin-left: auto;
     width: 3em;
     height:3em;
+    font-size: xx-large;
+    color: #ffffff;
+    text-shadow: 0 0 13px #1f130c;
+
 }
 .row{
     display: flex;
