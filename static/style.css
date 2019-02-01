@@ -23,14 +23,16 @@
 }
 .menu__btn{
     margin-top: 1em;
-    background-color: #694b4b;
+    background-color: #1d5641;
     color: white;
     font-size: initial;
 
 }
 .battle{
     min-height: 80%;
-     background-color: #694b4b;
+     background-color: #091f17;
+     box-shadow: 0 0 20px 0px black;
+
 
 }
 .atut{
