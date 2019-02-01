@@ -94,7 +94,7 @@ class Game:
     def take(self):
         if self.turn != self.attacker and self.duren == 0:
             index = self.find_player_by_id(self.turn)
-            self.players[index].cards.append(self.battle.attack[-1])
+            self.players[index].cards += self.battle.get_all()
             self.battle.clear()
             self.pour_players_cards()
 

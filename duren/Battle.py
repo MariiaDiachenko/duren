@@ -8,6 +8,9 @@ class Battle:
         self.attack = []
         self.defense = []
 
+    def get_all(self):
+        return self.attack + self.defense
+
     def get_puttable_cards(self, cards: list, attacker:bool, atut:str):
         return [card for card in cards if self.can_put_card(card, attacker, atut)]
 
